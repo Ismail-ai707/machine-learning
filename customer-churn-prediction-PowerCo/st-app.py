@@ -46,7 +46,7 @@ with st.expander('**About this project**'):
   ''', language='markdown')
 
 #   st.file_uploader('Please upload your file here')
-  with open('./Data_Description.pdf', 'rb') as f:
+  with open('customer-churn-prediction-PowerCo/Data_Description.pdf', 'rb') as f:
       st.download_button('Download Data Description', f, file_name='Data_Description.pdf', mime='application/pdf')
 
   st.markdown('**Libraries used**')
@@ -70,32 +70,8 @@ markdown_content = f"""
 # Display the markdown content
 st.markdown(markdown_content, unsafe_allow_html=True)
 
-''' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - '''
 
-# Define some functions that will be used by this app
-
-def annotate_stacked_bars(ax, pad=0.99, colour="white", textsize=8):
-    """
-    Add value annotations to the bars
-    """
-    annotations = []
-
-    # Iterate over the plotted rectangles/bars
-    for p in ax.patches:
-        # Calculate annotation
-        value = str(round(p.get_height(), 1))
-        # If value is 0 do not annotate
-        if value == '0.0':
-            continue
-        annotation = ax.annotate(
-            value,
-            ((p.get_x() + p.get_width() / 2) * pad - 0.05, (p.get_y() + p.get_height() / 2) * pad),
-            color=colour,
-            size=textsize
-        )
-        annotations.append(annotation)
-
-    return annotations
+# Here i define some functions that will be used by this app
 
 def plot_stacked_bars(dataframe, title_, size_=(18, 10), rot_=0, legend_="upper right"):
     """
@@ -121,7 +97,7 @@ def plot_stacked_bars(dataframe, title_, size_=(18, 10), rot_=0, legend_="upper 
     # Display the Matplotlib figure in Streamlit
     st.pyplot(fig)
 
-# def display_data_types_info(dataframe):
+# def display_data_types_info(dataframe): # used to check data types for debugging
 #     # Obtenir les types de données pour chaque variable
 #     data_types_info = dataframe.dtypes.reset_index()
 #     data_types_info.columns = ['Variable', 'Type']
@@ -312,14 +288,14 @@ def load_uploaded_data(uploaded_file):
 with st.expander('Import Data to start'):
     # Load data
     st.markdown('**1.1 Download & Explore Sample Data**')        
-    with open('./client_data.csv', 'rb') as client_file:
+    with open('customer-churn-prediction-PowerCo/client_data.csv', 'rb') as client_file:
         st.download_button(
             label="Download Client example CSV",
             data=client_file,
             file_name='client_data.csv',
             mime='text/csv',
         )
-    with open('./price_data.csv', 'rb') as price_file:
+    with open('customer-churn-prediction-PowerCo/price_data.csv', 'rb') as price_file:
         st.download_button(
             label="Download Price example CSV",
             data=price_file,
@@ -330,8 +306,8 @@ with st.expander('Import Data to start'):
     st.markdown('**1.2.1 Use Sample data**')
     example_data = st.toggle('Load example data')
     if example_data:
-        client_df = load_sample_data('./client_data.csv')
-        price_df = load_sample_data('./price_data.csv')
+        client_df = load_sample_data('customer-churn-prediction-PowerCo/client_data.csv')
+        price_df = load_sample_data('customer-churn-prediction-PowerCo/price_data.csv')
 
     st.markdown('**1.2.2 Use Custom Data**')
     client_data_file = st.file_uploader("Upload Client CSV data file", type=["csv"])
