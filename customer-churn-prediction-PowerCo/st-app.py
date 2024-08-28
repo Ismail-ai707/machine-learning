@@ -72,6 +72,28 @@ st.markdown(markdown_content, unsafe_allow_html=True)
 
 
 # Here i define some functions that will be used by this app
+def annotate_stacked_bars(ax, pad=0.99, colour="white", textsize=8):
+    """
+    Add value annotations to the bars
+    """
+    annotations = []
+
+    # Iterate over the plotted rectangles/bars
+    for p in ax.patches:
+        # Calculate annotation
+        value = str(round(p.get_height(), 1))
+        # If value is 0 do not annotate
+        if value == '0.0':
+            continue
+        annotation = ax.annotate(
+            value,
+            ((p.get_x() + p.get_width() / 2) * pad - 0.05, (p.get_y() + p.get_height() / 2) * pad),
+            color=colour,
+            size=textsize
+        )
+        annotations.append(annotation)
+
+    return annotations
 
 def plot_stacked_bars(dataframe, title_, size_=(18, 10), rot_=0, legend_="upper right"):
     """
