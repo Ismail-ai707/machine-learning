@@ -27,7 +27,7 @@ def load_lottiefile(filepath: str):
         return json.load(f)
     
 # Load the Lottie animation from the file
-lottie_animation = load_lottiefile('DSProject-animation.json')
+lottie_animation = load_lottiefile('customer-churn-prediction-PowerCo/DSProject-animation.json')
 
 st_lottie(lottie_animation, speed=1, height=500, key="animation")
 
