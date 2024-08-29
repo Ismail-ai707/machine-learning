@@ -27,7 +27,7 @@ def load_lottiefile(filepath: str):
         return json.load(f)
     
 # Load the Lottie animation from the file
-lottie_animation = load_lottiefile('customer-churn-prediction-PowerCo/DSProject-animation.json')
+lottie_animation = load_lottiefile('DSProject-animation.json')
 
 st_lottie(lottie_animation, speed=1, height=500, key="animation")
 
@@ -46,7 +46,7 @@ with st.expander('**About this project**'):
   ''', language='markdown')
 
 #   st.file_uploader('Please upload your file here')
-  with open('customer-churn-prediction-PowerCo/Data_Description.pdf', 'rb') as f:
+  with open('./Data_Description.pdf', 'rb') as f:
       st.download_button('Download Data Description', f, file_name='Data_Description.pdf', mime='application/pdf')
 
   st.markdown('**Libraries used**')
@@ -70,8 +70,10 @@ markdown_content = f"""
 # Display the markdown content
 st.markdown(markdown_content, unsafe_allow_html=True)
 
+''' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - '''
 
-# Here i define some functions that will be used by this app
+# Define some functions that will be used by this app
+
 def annotate_stacked_bars(ax, pad=0.99, colour="white", textsize=8):
     """
     Add value annotations to the bars
@@ -119,7 +121,7 @@ def plot_stacked_bars(dataframe, title_, size_=(18, 10), rot_=0, legend_="upper 
     # Display the Matplotlib figure in Streamlit
     st.pyplot(fig)
 
-# def display_data_types_info(dataframe): # used to check data types for debugging
+# def display_data_types_info(dataframe):
 #     # Obtenir les types de données pour chaque variable
 #     data_types_info = dataframe.dtypes.reset_index()
 #     data_types_info.columns = ['Variable', 'Type']
@@ -296,7 +298,7 @@ with st.sidebar:
 client_df = None
 price_df = None
 
-""" -----------------------------Load Data to start -------------------------- """
+# -----------------------------Load Data to start --------------------------
 st.markdown("<h1 style='font-size:32px;'>Load the data</h1>", unsafe_allow_html=True)
 # Cache the function that loads data
 @st.cache_data
@@ -310,14 +312,14 @@ def load_uploaded_data(uploaded_file):
 with st.expander('Import Data to start'):
     # Load data
     st.markdown('**1.1 Download & Explore Sample Data**')        
-    with open('customer-churn-prediction-PowerCo/client_data.csv', 'rb') as client_file:
+    with open('./client_data.csv', 'rb') as client_file:
         st.download_button(
             label="Download Client example CSV",
             data=client_file,
             file_name='client_data.csv',
             mime='text/csv',
         )
-    with open('customer-churn-prediction-PowerCo/price_data.csv', 'rb') as price_file:
+    with open('./price_data.csv', 'rb') as price_file:
         st.download_button(
             label="Download Price example CSV",
             data=price_file,
@@ -328,8 +330,8 @@ with st.expander('Import Data to start'):
     st.markdown('**1.2.1 Use Sample data**')
     example_data = st.toggle('Load example data')
     if example_data:
-        client_df = load_sample_data('customer-churn-prediction-PowerCo/client_data.csv')
-        price_df = load_sample_data('customer-churn-prediction-PowerCo/price_data.csv')
+        client_df = load_sample_data('./client_data.csv')
+        price_df = load_sample_data('./price_data.csv')
 
     st.markdown('**1.2.2 Use Custom Data**')
     client_data_file = st.file_uploader("Upload Client CSV data file", type=["csv"])
@@ -844,24 +846,24 @@ if client_df is not None and price_df is not None:
             )
             # Model Generalization on base data
             predictions = model.predict(X)
-
+            
             # Model evaluation on base data
-            general_accuracy = accuracy_score(predictions, y)
+            general_accuracy = accuracy_score(predictions, y.values)
             st.write('Model accuracy on initial target data :')
             st.write(general_accuracy)
 
             # Get a classification report on base data
-            base_classification_report = classification_report(predictions, y)
+            base_classification_report = classification_report(predictions, y.values)
             st.write('Classification report on initial target data :')
             st.markdown(f'```plaintext\n{base_classification_report}\n```')
 
             st.write('Now that our model is performing well on general data, we use an ensemble-based method called feature_importances_ that will allow us show how much each feature contributes to the prediction')
             # Show how much each feature contributes to the prediction using built-in function in ensemble methods
             @st.cache_data
-            def compute_feature_importances(model, X_train):
+            def compute_feature_importances(_model, X_train):
                 return pd.DataFrame({
                     'features': X_train.columns,
-                    'importance': model.feature_importances_
+                    'importance': _model.feature_importances_
                 }).sort_values(by='importance', ascending=True).reset_index(drop=True)
 
             # After model evaluation
