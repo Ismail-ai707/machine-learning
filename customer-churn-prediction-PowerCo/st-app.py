@@ -27,7 +27,7 @@ def load_lottiefile(filepath: str):
         return json.load(f)
     
 # Load the Lottie animation from the file
-lottie_animation = load_lottiefile('DSProject-animation.json')
+lottie_animation = load_lottiefile('customer-churn-prediction-PowerCo/DSProject-animation.json')
 
 st_lottie(lottie_animation, speed=1, height=500, key="animation")
 
@@ -46,7 +46,7 @@ with st.expander('**About this project**'):
   ''', language='markdown')
 
 #   st.file_uploader('Please upload your file here')
-  with open('./Data_Description.pdf', 'rb') as f:
+  with open('customer-churn-prediction-PowerCo/Data_Description.pdf', 'rb') as f:
       st.download_button('Download Data Description', f, file_name='Data_Description.pdf', mime='application/pdf')
 
   st.markdown('**Libraries used**')
@@ -312,14 +312,14 @@ def load_uploaded_data(uploaded_file):
 with st.expander('Import Data to start'):
     # Load data
     st.markdown('**1.1 Download & Explore Sample Data**')        
-    with open('./client_data.csv', 'rb') as client_file:
+    with open('customer-churn-prediction-PowerCo/client_data.csv', 'rb') as client_file:
         st.download_button(
             label="Download Client example CSV",
             data=client_file,
             file_name='client_data.csv',
             mime='text/csv',
         )
-    with open('./price_data.csv', 'rb') as price_file:
+    with open('customer-churn-prediction-PowerCo/price_data.csv', 'rb') as price_file:
         st.download_button(
             label="Download Price example CSV",
             data=price_file,
@@ -330,8 +330,8 @@ with st.expander('Import Data to start'):
     st.markdown('**1.2.1 Use Sample data**')
     example_data = st.toggle('Load example data')
     if example_data:
-        client_df = load_sample_data('./client_data.csv')
-        price_df = load_sample_data('./price_data.csv')
+        client_df = load_sample_data('customer-churn-prediction-PowerCo/client_data.csv')
+        price_df = load_sample_data('customer-churn-prediction-PowerCo/price_data.csv')
 
     st.markdown('**1.2.2 Use Custom Data**')
     client_data_file = st.file_uploader("Upload Client CSV data file", type=["csv"])
